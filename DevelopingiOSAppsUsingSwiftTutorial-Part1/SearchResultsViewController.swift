@@ -171,7 +171,13 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         }
     }
     
-   /* func searchItunes(searchTerm: String) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let detailsViewController: DetailsViewController = segue.destination as! DetailsViewController{
+            detailsViewController.album = self.albums[(appsTableView.indexPathForSelectedRow?.row)!]
+        
+        }
+    }
+       /* func searchItunes(searchTerm: String) {
         // The iTunes API wants multiple terms separated by + symbols, so replace spaces with + signs
         let itunesSearchTerm = searchTerm.replacingOccurrences(of: " ", with: "+", options: .caseInsensitive, range: nil)
         // Also replace every character with a percent encoding

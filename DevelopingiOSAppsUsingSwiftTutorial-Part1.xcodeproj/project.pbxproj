@@ -15,6 +15,7 @@
 		253154491F370A0700783B2A /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253154481F370A0700783B2A /* APIController.swift */; };
 		253DFA691F475F49007B461C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 253DFA681F475F49007B461C /* Assets.xcassets */; };
 		5D0C61761F6A6E0000DF318A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0C61751F6A6E0000DF318A /* Album.swift */; };
+		5D67EFDD1F6AA18E00C5418C /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D67EFDC1F6AA18E00C5418C /* DetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		253154481F370A0700783B2A /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
 		253DFA681F475F49007B461C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D0C61751F6A6E0000DF318A /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
+		5D67EFDC1F6AA18E00C5418C /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				0201E0421EA51BC200B2380C /* Intro.swift */,
 				253154481F370A0700783B2A /* APIController.swift */,
 				5D0C61751F6A6E0000DF318A /* Album.swift */,
+				5D67EFDC1F6AA18E00C5418C /* DetailsViewController.swift */,
 			);
 			path = "DevelopingiOSAppsUsingSwiftTutorial-Part1";
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 				0201E0331EA51BB600B2380C /* SearchResultsViewController.swift in Sources */,
 				0201E0311EA51BB600B2380C /* AppDelegate.swift in Sources */,
 				5D0C61761F6A6E0000DF318A /* Album.swift in Sources */,
+				5D67EFDD1F6AA18E00C5418C /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

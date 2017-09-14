@@ -65,9 +65,7 @@ struct Album {
                 
                 var newAlbum = Album(name: name!, price: price!, thumbnailImageURL: thumbnailURL, largeImageURL: imageURL, itemURL: itemURL!, artistURL: artistURL)
                 albums.append(newAlbum)
-//                var data =  result as! NSDictionary
-//                var name = data.value(forKey: "artistName") as! String
-//                print(name)
+
                 
             }
         }
