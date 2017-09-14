@@ -11,17 +11,19 @@ import UIKit
 class SearchResultsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,APIControllerProtocol {
     
     @IBOutlet var appsTableView: UITableView!
-    var tableData = NSArray()
+    //var tableData = NSArray()
     let kCellIdentifier: String = "SearchResultCell"
     var imageCache = [String:UIImage]()
+    var api : APIController!
+    var albums = [Album]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         //searchItunes(searchTerm: "JQ Software")
-        let api = APIController()
-        api.delegate = self
-        api.searchItunes(searchTerm: "Angry Birds")
+        api = APIController(delegate: self)
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        api.searchItunes(searchTerm: "Beatles")
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,81 +33,126 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableData.count
+        return albums.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyTestCell")
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: kCellIdentifier) as! UITableViewCell
         
+        let album = self.albums[indexPath.row]
         
+        cell.detailTextLabel?.text = album.price
+        // Update the textLabel text to use the title from the Album model
+        cell.textLabel?.text = album.title
         
-        if let rowData: NSDictionary = self.tableData[indexPath.row] as? NSDictionary,
-            // Grab the artworkUrl60 key to get an image URL for the app's thumbnail
-            let urlString = rowData["artworkUrl60"] as? String,
-            let imgURL = URL(string: urlString),
-            // Get the formatted price string for display in the subtitle
-            let formattedPrice = rowData["formattedPrice"] as? String,
-            // Download an NSData representation of the image at the URL
-            //let imgData = NSData(contentsOfURL: imgURL),
-            // Get the track name
-            let trackName = rowData["trackName"] as? String {
-            // Get the formatted price string for display in the subtitle
-            cell.detailTextLabel?.text = formattedPrice
-            cell.detailTextLabel?.textColor = UIColor.red
-            cell.backgroundColor = UIColor.yellow
-            // Update the imageView cell to use the downloaded image data
-            //cell.imageView?.image = UIImage(data: imgData)
-            // Update the textLabel text to use the trackName from the API
-            cell.textLabel?.text = trackName
-            cell.textLabel?.textColor = UIColor.red
-            
-            // Start by setting the cell's image to a static file
-            // Without this, we will end up without an image view!
-            cell.imageView?.image = UIImage(named: "Blank52")
-            
-            if let img = imageCache[urlString]{
+        // Start by setting the cell's image to a static file
+        // Without this, we will end up without an image view!
+        cell.imageView?.image = UIImage(named: "Blank52")
+        
+        let thumbnailURLString = album.thumbnailImageURL
+        let thumbnailURL = NSURL(string: thumbnailURLString)!
+        
+        // If this image is already cached, don't re-download
+        if let img = imageCache[thumbnailURLString] {
             cell.imageView?.image = img
-            }
-            else{
-                let request = NSMutableURLRequest(url: imgURL)
-                let mainQueue = OperationQueue.main
-                NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
-                    if error == nil {
-                        // Convert the downloaded data in to a UIImage object
-                        let image = UIImage(data: data!)
-                        // Store the image in to our cache
-                        self.imageCache[urlString] = image
-                        // Update the cell
-                        DispatchQueue.main.async(execute: {
-                            if let cellToUpdate = tableView.cellForRow(at: indexPath) {
-                                cellToUpdate.imageView?.image = image
-                            }
-                        })
-                    }
-                    else {
-                        print("Error: \(error?.localizedDescription)")
-                    }
-
-            })
-        
-            }
         }
-    
-    
-        // Get the app from the list at this row's index
-        //let app = tableData[indexPath.row]
-        
-        // Pull out the relevant strings in the app record
-        //cell.textLabel?.text = app["appName"]
-        //cell.detailTextLabel?.text = app["price"]
-        
+        else {
+            // The image isn't cached, download the img data
+            // We should perform this in a background thread
+            let request = NSMutableURLRequest(url: thumbnailURL as URL)
+                            let mainQueue = OperationQueue.main
+                            NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
+                                if error == nil {
+                                    // Convert the downloaded data in to a UIImage object
+                                    let image = UIImage(data: data!)
+                                    // Store the image in to our cache
+                                    self.imageCache[thumbnailURLString] = image
+                                    // Update the cell
+                                    DispatchQueue.main.async(execute: {
+                                        if let cellToUpdate = tableView.cellForRow(at: indexPath) {
+                                            cellToUpdate.imageView?.image = image
+                                        }
+                                    })
+                                }
+                                else {
+                                    print("Error: \(error?.localizedDescription)")
+                                }
+            })
+        }
         return cell
+        //2. way
+        
+        //let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyTestCell")
+//        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: kCellIdentifier) as! UITableViewCell
+//        
+//        
+//        
+//        if let rowData: NSDictionary = self.tableData[indexPath.row] as? NSDictionary,
+//            // Grab the artworkUrl60 key to get an image URL for the app's thumbnail
+//            let urlString = rowData["artworkUrl60"] as? String,
+//            let imgURL = URL(string: urlString),
+//            // Get the formatted price string for display in the subtitle
+//            let formattedPrice = rowData["formattedPrice"] as? String,
+//            // Download an NSData representation of the image at the URL
+//            //let imgData = NSData(contentsOfURL: imgURL),
+//            // Get the track name
+//            let trackName = rowData["trackName"] as? String {
+//            // Get the formatted price string for display in the subtitle
+//            cell.detailTextLabel?.text = formattedPrice
+//            cell.detailTextLabel?.textColor = UIColor.red
+//            cell.backgroundColor = UIColor.yellow
+//            // Update the imageView cell to use the downloaded image data
+//            //cell.imageView?.image = UIImage(data: imgData)
+//            // Update the textLabel text to use the trackName from the API
+//            cell.textLabel?.text = trackName
+//            cell.textLabel?.textColor = UIColor.red
+//            
+//            // Start by setting the cell's image to a static file
+//            // Without this, we will end up without an image view!
+//            cell.imageView?.image = UIImage(named: "Blank52")
+//            
+//            if let img = imageCache[urlString]{
+//            cell.imageView?.image = img
+//            }
+//            else{
+//                let request = NSMutableURLRequest(url: imgURL)
+//                let mainQueue = OperationQueue.main
+//                NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
+//                    if error == nil {
+//                        // Convert the downloaded data in to a UIImage object
+//                        let image = UIImage(data: data!)
+//                        // Store the image in to our cache
+//                        self.imageCache[urlString] = image
+//                        // Update the cell
+//                        DispatchQueue.main.async(execute: {
+//                            if let cellToUpdate = tableView.cellForRow(at: indexPath) {
+//                                cellToUpdate.imageView?.image = image
+//                            }
+//                        })
+//                    }
+//                    else {
+//                        print("Error: \(error?.localizedDescription)")
+//                    }
+//
+//            })
+//        
+//            }
+//        }
+//    
+//    
+//        // Get the app from the list at this row's index
+//        //let app = tableData[indexPath.row]
+//        
+//        // Pull out the relevant strings in the app record
+//        //cell.textLabel?.text = app["appName"]
+//        //cell.detailTextLabel?.text = app["price"]
+//        
+//        return cell
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let data = self.tableData[indexPath.row] as? NSDictionary,
+        if let data = self.albums[indexPath.row] as? NSDictionary,
          let name = data["trackName"] as? String,
              let formattedPrice = data["formattedPrice"] {
             let alert = UIAlertController(title: name, message: formattedPrice as? String, preferredStyle: .alert)
@@ -117,8 +164,10 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     
     func didReceivedApiResults(results: NSArray) {
         DispatchQueue.main.async {
-            self.tableData = results
+            self.albums = Album.albumsWithJSON(results: results)
             self.appsTableView!.reloadData()
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+
         }
     }
     

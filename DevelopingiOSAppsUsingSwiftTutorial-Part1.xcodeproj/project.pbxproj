@@ -14,6 +14,7 @@
 		0201E0431EA51BC200B2380C /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0201E0421EA51BC200B2380C /* Intro.swift */; };
 		253154491F370A0700783B2A /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253154481F370A0700783B2A /* APIController.swift */; };
 		253DFA691F475F49007B461C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 253DFA681F475F49007B461C /* Assets.xcassets */; };
+		5D0C61761F6A6E0000DF318A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0C61751F6A6E0000DF318A /* Album.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		0201E0421EA51BC200B2380C /* Intro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Intro.swift; sourceTree = "<group>"; };
 		253154481F370A0700783B2A /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
 		253DFA681F475F49007B461C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5D0C61751F6A6E0000DF318A /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				0201E03C1EA51BB600B2380C /* Info.plist */,
 				0201E0421EA51BC200B2380C /* Intro.swift */,
 				253154481F370A0700783B2A /* APIController.swift */,
+				5D0C61751F6A6E0000DF318A /* Album.swift */,
 			);
 			path = "DevelopingiOSAppsUsingSwiftTutorial-Part1";
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 				0201E0431EA51BC200B2380C /* Intro.swift in Sources */,
 				0201E0331EA51BB600B2380C /* SearchResultsViewController.swift in Sources */,
 				0201E0311EA51BB600B2380C /* AppDelegate.swift in Sources */,
+				5D0C61761F6A6E0000DF318A /* Album.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

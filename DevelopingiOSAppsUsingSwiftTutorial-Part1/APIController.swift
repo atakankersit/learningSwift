@@ -12,8 +12,14 @@ protocol APIControllerProtocol {
     func didReceivedApiResults(results: NSArray)
 }
 
+
+
  class APIController {
-    var delegate: APIControllerProtocol?
+    var delegate: APIControllerProtocol
+    
+    init(delegate: APIControllerProtocol) {
+        self.delegate = delegate
+    }
     
     func searchItunes(searchTerm: String) {
         // The iTunes API wants multiple terms separated by + symbols, so replace spaces with + signs
@@ -22,7 +28,7 @@ protocol APIControllerProtocol {
         let escapedSearchTerm = itunesSearchTerm.addingPercentEncoding(withAllowedCharacters: [])!
         
         // This is the URL that Apple offers for their search API
-        let urlString = "http://itunes.apple.com/search?term=\(escapedSearchTerm)&media=software"
+        let urlString = "https://itunes.apple.com/search?term=\(escapedSearchTerm)&media=music&entity=album"
         let url = URL(string: urlString)!
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
@@ -36,7 +42,7 @@ protocol APIControllerProtocol {
             do {
                 let jsonResult = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
                 let results: NSArray = jsonResult["results"] as! NSArray
-                self.delegate?.didReceivedApiResults(results: results)
+                self.delegate.didReceivedApiResults(results: results)
 
             }
             catch let err {
