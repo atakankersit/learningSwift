@@ -8,19 +8,26 @@
 
 import UIKit
 
-class DetailsViewController: UIViewController {
+class DetailsViewController: UIViewController, UITableViewDataSource , UITabBarDelegate , APIControllerProtocol {
 
     var album: Album?
+    var tracks = [Track]()
+    
+
     
     @IBOutlet weak var imgPhoto: UIImageView!
-    
     @IBOutlet weak var tvTitle: UILabel!
+    @IBOutlet weak var tracksTableView: UITableView!
+    
+    var api : APIController!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         tvTitle.text = album?.title
-        
         changeImage()
+        api = APIController(delegate: self)
+        api.lookupAlbum(collectionId: (album?.collectionId)!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,7 +56,6 @@ class DetailsViewController: UIViewController {
                 print("Error: \(error?.localizedDescription)")
             }
         })
-        
     }
     
 
@@ -63,4 +69,23 @@ class DetailsViewController: UIViewController {
     }
     */
 
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tracks.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackCell
+        let track = tracks[indexPath.row]
+        cell.titleLabel.text = track.title
+        cell.playIcon.text = "▶️"
+        return cell
+        
+    }
+    
+    func didReceivedApiResults(results: NSArray) {
+        DispatchQueue.main.async {
+            self.tracks = Track.tracksWithJSON(results: results)
+            self.tracksTableView!.reloadData()
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        }
+    }
 }

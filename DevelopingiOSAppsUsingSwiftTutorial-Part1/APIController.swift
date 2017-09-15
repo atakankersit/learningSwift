@@ -29,7 +29,15 @@ protocol APIControllerProtocol {
         
         // This is the URL that Apple offers for their search API
         let urlString = "https://itunes.apple.com/search?term=\(escapedSearchTerm)&media=music&entity=album"
-        let url = URL(string: urlString)!
+        get(path: urlString)
+    }
+    
+    func lookupAlbum(collectionId: Int)  {
+        get(path: "https://itunes.apple.com/lookup?id=\(collectionId)&entity=song")
+    }
+    
+    func get(path: String)  {
+        let url = URL(string: path)!
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 // If there is an error in the web request, print it to the console
@@ -43,14 +51,15 @@ protocol APIControllerProtocol {
                 let jsonResult = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
                 let results: NSArray = jsonResult["results"] as! NSArray
                 self.delegate.didReceivedApiResults(results: results)
-
+                
             }
             catch let err {
                 print(err.localizedDescription)
             }
-
+            
             // Close the dataTask block, and call resume() in order to make it run immediately
             }.resume()
+
     }
     
 

@@ -16,6 +16,8 @@
 		253DFA691F475F49007B461C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 253DFA681F475F49007B461C /* Assets.xcassets */; };
 		5D0C61761F6A6E0000DF318A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0C61751F6A6E0000DF318A /* Album.swift */; };
 		5D67EFDD1F6AA18E00C5418C /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D67EFDC1F6AA18E00C5418C /* DetailsViewController.swift */; };
+		5DBEE07C1F6BC79200B1F75B /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBEE07B1F6BC79200B1F75B /* Track.swift */; };
+		5DBEE0821F6BD60C00B1F75B /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBEE0811F6BD60C00B1F75B /* TrackCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		253DFA681F475F49007B461C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D0C61751F6A6E0000DF318A /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		5D67EFDC1F6AA18E00C5418C /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		5DBEE07B1F6BC79200B1F75B /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		5DBEE0811F6BD60C00B1F75B /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,8 @@
 				253154481F370A0700783B2A /* APIController.swift */,
 				5D0C61751F6A6E0000DF318A /* Album.swift */,
 				5D67EFDC1F6AA18E00C5418C /* DetailsViewController.swift */,
+				5DBEE07B1F6BC79200B1F75B /* Track.swift */,
+				5DBEE0811F6BD60C00B1F75B /* TrackCell.swift */,
 			);
 			path = "DevelopingiOSAppsUsingSwiftTutorial-Part1";
 			sourceTree = "<group>";
@@ -154,6 +160,8 @@
 				0201E0311EA51BB600B2380C /* AppDelegate.swift in Sources */,
 				5D0C61761F6A6E0000DF318A /* Album.swift in Sources */,
 				5D67EFDD1F6AA18E00C5418C /* DetailsViewController.swift in Sources */,
+				5DBEE07C1F6BC79200B1F75B /* Track.swift in Sources */,
+				5DBEE0821F6BD60C00B1F75B /* TrackCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
