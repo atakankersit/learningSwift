@@ -177,6 +177,12 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         
         }
     }
+    
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
+        UIView.animate(withDuration: 0.25, animations: {cell.layer.transform = CATransform3DMakeScale(1, 1, 1)})
+    }
        /* func searchItunes(searchTerm: String) {
         // The iTunes API wants multiple terms separated by + symbols, so replace spaces with + signs
         let itunesSearchTerm = searchTerm.replacingOccurrences(of: " ", with: "+", options: .caseInsensitive, range: nil)

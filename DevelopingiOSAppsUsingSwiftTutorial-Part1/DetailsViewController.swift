@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import MediaPlayer
 
-class DetailsViewController: UIViewController, UITableViewDataSource , UITabBarDelegate , APIControllerProtocol {
+class DetailsViewController: UIViewController, UITableViewDataSource , UITableViewDelegate , APIControllerProtocol {
 
     var album: Album?
     var tracks = [Track]()
     
-
+    var mediaPlayer: MPMoviePlayerController = MPMoviePlayerController()
     
     @IBOutlet weak var imgPhoto: UIImageView!
     @IBOutlet weak var tvTitle: UILabel!
@@ -69,6 +70,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource , UITabBarD
     }
     */
 
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tracks.count
     }
@@ -81,11 +83,30 @@ class DetailsViewController: UIViewController, UITableViewDataSource , UITabBarD
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var track = tracks[indexPath.row]
+                mediaPlayer.stop()
+                mediaPlayer.contentURL = NSURL(string: track.previewUrl) as! URL
+                mediaPlayer.play()
+                if let cell = tableView.cellForRow(at: indexPath) as? TrackCell {
+                cell.playIcon.text = "⏹"
+                }
+    }
+    
     func didReceivedApiResults(results: NSArray) {
         DispatchQueue.main.async {
             self.tracks = Track.tracksWithJSON(results: results)
             self.tracksTableView!.reloadData()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
+        UIView.animate(withDuration: 0.25, animations: {cell.layer.transform = CATransform3DMakeScale(1, 1, 1)})
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+    mediaPlayer.stop()
     }
 }
