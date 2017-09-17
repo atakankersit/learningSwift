@@ -174,9 +174,12 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let detailsViewController: DetailsViewController = segue.destination as! DetailsViewController{
             detailsViewController.album = self.albums[(appsTableView.indexPathForSelectedRow?.row)!]
-        
         }
-    }
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        navigationItem.backBarButtonItem = backItem
+        }
     
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
